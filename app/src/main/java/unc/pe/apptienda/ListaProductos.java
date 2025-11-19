@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import unc.pe.apptienda.databinding.ActivityListaProductosBinding;
 
 public class ListaProductos extends AppCompatActivity {
-    private ActivityListaProductosBinding binding;
-    private ArrayList<Producto> listaProductos;
+    ActivityListaProductosBinding binding;
+    ArrayList<Producto> listaProductos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +31,6 @@ public class ListaProductos extends AppCompatActivity {
     }
     private void cargarProductos() {
         listaProductos = new ArrayList<>();
-
         listaProductos.add(new Producto("Lavadora", 1100.00, R.drawable.lavadora));
         listaProductos.add(new Producto("Refrigeradora", 1500.00, R.drawable.refrigeradora));
         listaProductos.add(new Producto("Cocina", 850.00, R.drawable.cocina));

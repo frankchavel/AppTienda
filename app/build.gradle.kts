@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "unc.pe.apptienda"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "unc.pe.apptienda"
