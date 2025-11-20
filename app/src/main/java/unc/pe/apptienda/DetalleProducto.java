@@ -62,12 +62,10 @@ public class DetalleProducto extends AppCompatActivity {
             @Override public void afterTextChanged(Editable s) {}
         });
 
-        // Cambios en los adicionales
         binding.cbInstalacion.setOnCheckedChangeListener((b, v) -> calcularTotal());
         binding.cbMantenimiento.setOnCheckedChangeListener((b, v) -> calcularTotal());
         binding.cbSeguro.setOnCheckedChangeListener((b, v) -> calcularTotal());
 
-        // Cambios en los descuentos
         binding.rbTarjeta.setOnCheckedChangeListener((b, v) -> calcularTotal());
         binding.rbSinTarjeta.setOnCheckedChangeListener((b, v) -> calcularTotal());
 
@@ -75,7 +73,7 @@ public class DetalleProducto extends AppCompatActivity {
         mostrarDatos();
         configurarBotonObsequio();
         configurarBotonComprar();
-        configurarBotonRegresar();   // ← agregado
+        configurarBotonRegresar();
     }
 
     private void recibirDatos() {
@@ -105,7 +103,6 @@ public class DetalleProducto extends AppCompatActivity {
 
         String txtCant = binding.etCantidad.getText().toString().trim();
 
-        // Si no hay cantidad, mostrar 0 en total
         if (txtCant.isEmpty()) {
             binding.txtTotal.setText("S/ 0.00");
             return;
@@ -113,10 +110,8 @@ public class DetalleProducto extends AppCompatActivity {
 
         int cantidad = Integer.parseInt(txtCant);
 
-        // 1) Subtotal
         double subtotal = precioProducto * cantidad;
 
-        // 2) Adicionales
         double montoAdicional = 0;
 
         if (binding.cbInstalacion.isChecked())
@@ -128,7 +123,6 @@ public class DetalleProducto extends AppCompatActivity {
         if (binding.cbSeguro.isChecked())
             montoAdicional += subtotal * 0.07;
 
-        // 3) Descuento
         double montoDescuento = 0;
 
         if (binding.rbTarjeta.isChecked())
@@ -136,10 +130,8 @@ public class DetalleProducto extends AppCompatActivity {
         else if (binding.rbSinTarjeta.isChecked())
             montoDescuento = subtotal * 0.05;
 
-        // 4) Total
         double total = subtotal + montoAdicional - montoDescuento;
 
-        // MOSTRAR TOTAL
         binding.txtTotal.setText("S/ " + String.format("%.2f", total));
     }
 
@@ -155,28 +147,25 @@ public class DetalleProducto extends AppCompatActivity {
             }
             int cantidad = Integer.parseInt(textoCantidad);
 
-            // 2) CALCULAR ADICIONALES SEGÚN LA INTERFAZ (PORCENTAJES)
             double montoAdicional = 0;
 
             if (binding.cbInstalacion.isChecked())
-                montoAdicional += precioProducto * cantidad * 0.05;   // 5%
+                montoAdicional += precioProducto * cantidad * 0.05;
 
             if (binding.cbMantenimiento.isChecked())
-                montoAdicional += precioProducto * cantidad * 0.10;   // 10%
+                montoAdicional += precioProducto * cantidad * 0.10;
 
             if (binding.cbSeguro.isChecked())
-                montoAdicional += precioProducto * cantidad * 0.07;   // 7%
+                montoAdicional += precioProducto * cantidad * 0.07;
 
-            // 3) CALCULAR DESCUENTO
             double montoDescuento = 0;
 
             if (binding.rbTarjeta.isChecked()) {
-                montoDescuento = precioProducto * cantidad * 0.10; // 10%
+                montoDescuento = precioProducto * cantidad * 0.10;
             } else if (binding.rbSinTarjeta.isChecked()) {
-                montoDescuento = precioProducto * cantidad * 0.05; // 5%
+                montoDescuento = precioProducto * cantidad * 0.05;
             }
 
-            // 4) CALCULAR SUBTOTAL Y TOTAL
             double subtotal = precioProducto * cantidad;
             double total = subtotal + montoAdicional - montoDescuento;
 
@@ -197,7 +186,7 @@ public class DetalleProducto extends AppCompatActivity {
 
     private void configurarBotonRegresar() {
         binding.btnRegresar.setOnClickListener(v -> {
-            finish(); // Regresa a ListaProductos
+            finish();
         });
     }
 }
