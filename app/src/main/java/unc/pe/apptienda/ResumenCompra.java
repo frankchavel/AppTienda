@@ -8,13 +8,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class ResumenCompra extends AppCompatActivity {
+import unc.pe.apptienda.databinding.ActivityListaProductosBinding;
+import unc.pe.apptienda.databinding.ActivityResumenCompraBinding;
 
+public class ResumenCompra extends AppCompatActivity {
+    ActivityResumenCompraBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_resumen_compra);
+        binding = ActivityResumenCompraBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
