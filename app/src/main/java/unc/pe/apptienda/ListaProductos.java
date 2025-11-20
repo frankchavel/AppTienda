@@ -16,6 +16,7 @@ import unc.pe.apptienda.databinding.ActivityListaProductosBinding;
 public class ListaProductos extends AppCompatActivity {
     ActivityListaProductosBinding binding;
     ArrayList<Producto> listaProductos;
+    ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,7 @@ public class ListaProductos extends AppCompatActivity {
             return insets;
         });
         cargarProductos();
+
     }
     private void cargarProductos() {
         listaProductos = new ArrayList<>();
@@ -36,5 +38,6 @@ public class ListaProductos extends AppCompatActivity {
         listaProductos.add(new Producto("Cocina", 850.00, R.drawable.cocina));
         listaProductos.add(new Producto("Rápiducha", 250.00, R.drawable.rapiducha));
     }
+
 
 }
