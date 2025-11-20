@@ -1,5 +1,6 @@
 package unc.pe.apptienda;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,17 +16,19 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.Random;
 
+import unc.pe.apptienda.databinding.ActivityDetalleProductoBinding;
+import unc.pe.apptienda.databinding.ActivityListaProductosBinding;
+
 public class DetalleProducto extends AppCompatActivity {
 
-    ImageView productImage, giftImage;
-    TextView productName, productPrice, tvCantidad, tvRegalo;
+    private ActivityDetalleProductoBinding binding;
 
-    CheckBox cbInstalacion, cbMantenimiento, cbSeguro;
-    RadioButton rbTarjeta, rbSinTarjeta;
+    // Datos enviados desde la lista
+    private String nombreProducto;
+    private double precioProducto;
+    private int imagenProducto;
 
-    Button btnObsequio;
-
-    // Nombres de los regalos
+    // Datos de obsequios
     String[] nombresRegalos = {
             "Set de tazas x 6 und.",
             "Individuales x 12 und.",
@@ -34,7 +37,6 @@ public class DetalleProducto extends AppCompatActivity {
             "Cucharitas de té x 12 und."
     };
 
-    // Imágenes de los regalos (asegúrate que existen en drawable)
     int[] imagenesRegalos = {
             R.drawable.tazas,
             R.drawable.individuales,
@@ -43,55 +45,53 @@ public class DetalleProducto extends AppCompatActivity {
             R.drawable.cucharas
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_detalle_producto);
-
+        binding = ActivityDetalleProductoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
             return insets;
         });
 
-        // Enlazar vistas del producto
-        productImage = findViewById(R.id.product_image);
-        productName  = findViewById(R.id.product_name);
-        productPrice = findViewById(R.id.product_price);
-        tvCantidad   = findViewById(R.id.etCantidad);
+        recibirDatos();
+        mostrarDatos();
+        configurarBotonObsequio();
+        configurarBotonComprar();
 
-        cbInstalacion  = findViewById(R.id.cbInstalacion);
-        cbMantenimiento = findViewById(R.id.cbMantenimiento);
-        cbSeguro       = findViewById(R.id.cbSeguro);
 
-        rbTarjeta    = findViewById(R.id.rbTarjeta);
-        rbSinTarjeta = findViewById(R.id.rbSinTarjeta);
+    }
+    private void recibirDatos() {
+        nombreProducto = getIntent().getStringExtra("nombre");
+        precioProducto = getIntent().getDoubleExtra("precio", 0.0);
+        imagenProducto = getIntent().getIntExtra("imagen", 0);
+    }
 
-        // Vistas de obsequio
-        giftImage = findViewById(R.id.ivRegalo);
-        tvRegalo = findViewById(R.id.tvRegalo);
-        btnObsequio = findViewById(R.id.btnObsequio);
+    private void mostrarDatos() {
+        binding.productName.setText(nombreProducto);
+        binding.productPrice.setText("S/ " + precioProducto);
+        binding.productImage.setImageResource(imagenProducto);
+    }
 
-        // Recibir datos desde la lista
-        String nombre = getIntent().getStringExtra("nombre");
-        double precio = getIntent().getDoubleExtra("precio", 0.0);
-        int imagen = getIntent().getIntExtra("imagen", 0);
-
-        // Mostrar datos del producto
-        productName.setText(nombre);
-        productPrice.setText("S/ " + precio);
-        productImage.setImageResource(imagen);
-
-        // Acción del botón Obsequio
-        btnObsequio.setOnClickListener(v -> generarObsequio());
+    private void configurarBotonObsequio() {
+        binding.btnObsequio.setOnClickListener(v -> generarObsequio());
     }
 
     private void generarObsequio() {
         Random random = new Random();
         int index = random.nextInt(nombresRegalos.length);
 
-        giftImage.setImageResource(imagenesRegalos[index]);
-        tvRegalo.setText(nombresRegalos[index]);
+        binding.ivRegalo.setImageResource(imagenesRegalos[index]);
+        binding.tvRegalo.setText(nombresRegalos[index]);
+    }
+
+    private void configurarBotonComprar() {
+        binding.btnComprar.setOnClickListener(v -> {
+            // Aquí pondrás la lógica para calcular totales
+        });
     }
 }
