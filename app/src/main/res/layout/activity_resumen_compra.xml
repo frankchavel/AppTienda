@@ -11,7 +11,100 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ResumenCompra">
+        tools:context=".ResumenCompra"
+        android:padding="20dp">
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- TÍTULO -->
+                <TextView
+                    android:id="@+id/tvTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Resumen de la Compra"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:paddingBottom="20dp"
+                    android:textColor="#D11E26" />
+
+                <!-- DATOS DEL PRODUCTO -->
+                <TextView
+                    android:id="@+id/tvNombreProducto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Producto:"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="10dp" />
+
+                <TextView
+                    android:id="@+id/tvPrecioCantidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Precio y Cantidad:"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="10dp" />
+
+                <TextView
+                    android:id="@+id/tvSubtotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Subtotal:"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="10dp" />
+
+                <TextView
+                    android:id="@+id/tvAdicionales"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Adicionales:"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="10dp" />
+
+                <TextView
+                    android:id="@+id/tvDescuento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Descuento:"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="10dp" />
+
+                <TextView
+                    android:id="@+id/tvTotalPagar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total a Pagar:"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="20dp" />
+
+                <!-- BOTÓN REGRESAR -->
+                <Button
+                    android:id="@+id/btnRegresar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Regresar"
+                    android:backgroundTint="#D11E26"
+                    android:textColor="@android:color/white"
+                    android:padding="12dp"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

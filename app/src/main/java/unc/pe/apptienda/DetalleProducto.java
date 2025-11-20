@@ -1,12 +1,7 @@
 package unc.pe.apptienda;
 
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +12,6 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.Random;
 
 import unc.pe.apptienda.databinding.ActivityDetalleProductoBinding;
-import unc.pe.apptienda.databinding.ActivityListaProductosBinding;
 
 public class DetalleProducto extends AppCompatActivity {
 
@@ -45,13 +39,13 @@ public class DetalleProducto extends AppCompatActivity {
             R.drawable.cucharas
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         binding = ActivityDetalleProductoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
@@ -62,9 +56,9 @@ public class DetalleProducto extends AppCompatActivity {
         mostrarDatos();
         configurarBotonObsequio();
         configurarBotonComprar();
-
-
+        configurarBotonRegresar();   // ← agregado
     }
+
     private void recibirDatos() {
         nombreProducto = getIntent().getStringExtra("nombre");
         precioProducto = getIntent().getDoubleExtra("precio", 0.0);
@@ -91,7 +85,31 @@ public class DetalleProducto extends AppCompatActivity {
 
     private void configurarBotonComprar() {
         binding.btnComprar.setOnClickListener(v -> {
-            // Aquí pondrás la lógica para calcular totales
+
+            int cantidad = 1;   // si todavía no usas un selector, va fijo
+            double subtotal = precioProducto * cantidad;
+
+            double adicionales = 0;  // si después agregas, ya está listo
+            double descuento = 0;    // igual
+            double total = subtotal + adicionales - descuento;
+
+            Intent intent = new Intent(DetalleProducto.this, ResumenCompra.class);
+            intent.putExtra("nombre", nombreProducto);
+            intent.putExtra("precio", precioProducto);
+            intent.putExtra("cantidad", cantidad);
+            intent.putExtra("subtotal", subtotal);
+            intent.putExtra("adicionales", adicionales);
+            intent.putExtra("descuento", descuento);
+            intent.putExtra("total", total);
+
+            startActivity(intent);
+        });
+    }
+
+
+    private void configurarBotonRegresar() {
+        binding.btnRegresar.setOnClickListener(v -> {
+            finish(); // Regresa a ListaProductos
         });
     }
 }
