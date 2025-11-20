@@ -2,6 +2,8 @@ package unc.pe.apptienda;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,6 +53,23 @@ public class DetalleProducto extends AppCompatActivity {
             v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
             return insets;
         });
+        // Cambios en cantidad
+        binding.etCantidad.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+                calcularTotal();
+            }
+            @Override public void afterTextChanged(Editable s) {}
+        });
+
+        // Cambios en los adicionales
+        binding.cbInstalacion.setOnCheckedChangeListener((b, v) -> calcularTotal());
+        binding.cbMantenimiento.setOnCheckedChangeListener((b, v) -> calcularTotal());
+        binding.cbSeguro.setOnCheckedChangeListener((b, v) -> calcularTotal());
+
+        // Cambios en los descuentos
+        binding.rbTarjeta.setOnCheckedChangeListener((b, v) -> calcularTotal());
+        binding.rbSinTarjeta.setOnCheckedChangeListener((b, v) -> calcularTotal());
 
         recibirDatos();
         mostrarDatos();
@@ -82,6 +101,48 @@ public class DetalleProducto extends AppCompatActivity {
         binding.ivRegalo.setImageResource(imagenesRegalos[index]);
         binding.tvRegalo.setText(nombresRegalos[index]);
     }
+    private void calcularTotal() {
+
+        String txtCant = binding.etCantidad.getText().toString().trim();
+
+        // Si no hay cantidad, mostrar 0 en total
+        if (txtCant.isEmpty()) {
+            binding.txtTotal.setText("S/ 0.00");
+            return;
+        }
+
+        int cantidad = Integer.parseInt(txtCant);
+
+        // 1) Subtotal
+        double subtotal = precioProducto * cantidad;
+
+        // 2) Adicionales
+        double montoAdicional = 0;
+
+        if (binding.cbInstalacion.isChecked())
+            montoAdicional += subtotal * 0.05;
+
+        if (binding.cbMantenimiento.isChecked())
+            montoAdicional += subtotal * 0.10;
+
+        if (binding.cbSeguro.isChecked())
+            montoAdicional += subtotal * 0.07;
+
+        // 3) Descuento
+        double montoDescuento = 0;
+
+        if (binding.rbTarjeta.isChecked())
+            montoDescuento = subtotal * 0.10;
+        else if (binding.rbSinTarjeta.isChecked())
+            montoDescuento = subtotal * 0.05;
+
+        // 4) Total
+        double total = subtotal + montoAdicional - montoDescuento;
+
+        // MOSTRAR TOTAL
+        binding.txtTotal.setText("S/ " + String.format("%.2f", total));
+    }
+
 
     private void configurarBotonComprar() {
         binding.btnComprar.setOnClickListener(v -> {
