@@ -86,20 +86,47 @@ public class DetalleProducto extends AppCompatActivity {
     private void configurarBotonComprar() {
         binding.btnComprar.setOnClickListener(v -> {
 
-            int cantidad = 1;   // si todavía no usas un selector, va fijo
-            double subtotal = precioProducto * cantidad;
+            String textoCantidad = binding.etCantidad.getText().toString().trim();
 
-            double adicionales = 0;  // si después agregas, ya está listo
-            double descuento = 0;    // igual
-            double total = subtotal + adicionales - descuento;
+            if (textoCantidad.isEmpty()) {
+                binding.etCantidad.setError("Ingrese una cantidad");
+                return;
+            }
+            int cantidad = Integer.parseInt(textoCantidad);
+
+            // 2) CALCULAR ADICIONALES SEGÚN LA INTERFAZ (PORCENTAJES)
+            double montoAdicional = 0;
+
+            if (binding.cbInstalacion.isChecked())
+                montoAdicional += precioProducto * cantidad * 0.05;   // 5%
+
+            if (binding.cbMantenimiento.isChecked())
+                montoAdicional += precioProducto * cantidad * 0.10;   // 10%
+
+            if (binding.cbSeguro.isChecked())
+                montoAdicional += precioProducto * cantidad * 0.07;   // 7%
+
+            // 3) CALCULAR DESCUENTO
+            double montoDescuento = 0;
+
+            if (binding.rbTarjeta.isChecked()) {
+                montoDescuento = precioProducto * cantidad * 0.10; // 10%
+            } else if (binding.rbSinTarjeta.isChecked()) {
+                montoDescuento = precioProducto * cantidad * 0.05; // 5%
+            }
+
+            // 4) CALCULAR SUBTOTAL Y TOTAL
+            double subtotal = precioProducto * cantidad;
+            double total = subtotal + montoAdicional - montoDescuento;
+
 
             Intent intent = new Intent(DetalleProducto.this, ResumenCompra.class);
             intent.putExtra("nombre", nombreProducto);
             intent.putExtra("precio", precioProducto);
             intent.putExtra("cantidad", cantidad);
             intent.putExtra("subtotal", subtotal);
-            intent.putExtra("adicionales", adicionales);
-            intent.putExtra("descuento", descuento);
+            intent.putExtra("adicionales", montoAdicional);
+            intent.putExtra("descuento", montoDescuento);
             intent.putExtra("total", total);
 
             startActivity(intent);

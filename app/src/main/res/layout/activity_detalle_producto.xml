@@ -91,9 +91,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
+                                android:hint="Cantidad"
                                 android:minHeight="48dp"
-                                android:text="Cantidad"
-                                android:textColor="@android:color/darker_gray"
+                                android:textColor="@color/black"
                                 android:textSize="16sp" />
                         </LinearLayout>
                     </LinearLayout>
