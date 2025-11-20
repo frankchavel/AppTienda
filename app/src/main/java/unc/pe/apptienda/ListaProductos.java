@@ -43,6 +43,12 @@ public class ListaProductos extends AppCompatActivity {
         listaProductos.add(new Producto("Lavadora", 1100.00, R.drawable.lavadora));
         listaProductos.add(new Producto("Refrigeradora", 1500.00, R.drawable.refrigeradora));
         listaProductos.add(new Producto("Cocina", 850.00, R.drawable.cocina));
+        listaProductos.add(new Producto("Licuadora", 500.00, R.drawable.licuadora));
+        listaProductos.add(new Producto("Olla Arrocera", 120.00, R.drawable.olla));
+        listaProductos.add(new Producto("Horno", 380.00, R.drawable.horno));
+        listaProductos.add(new Producto("Televisor", 1500.00, R.drawable.televisor));
+        listaProductos.add(new Producto("Cafetera", 400.00, R.drawable.cafetera));
+        listaProductos.add(new Producto("Plancha", 200.00, R.drawable.plancha));
         listaProductos.add(new Producto("Rápiducha", 250.00, R.drawable.rapiducha));
     }
 
