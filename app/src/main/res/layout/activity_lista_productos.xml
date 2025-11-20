@@ -13,42 +13,38 @@
         android:padding="16dp"
         android:background="#F5F5F5">
 
-        <ListView
-            android:id="@+id/lvProductos"
-            android:layout_width="388dp"
-            android:layout_height="615dp"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="14dp"
-            android:paddingBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar2"
-            android:layout_width="494dp"
-            android:layout_height="58dp"
+            android:layout_width="402dp"
+            android:layout_height="64dp"
             android:background="@android:color/holo_red_dark"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tituloProductos"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
             android:text="Lista de Productos"
+            android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="22sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/lvProductos"
-            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteX="28dp"
+            tools:layout_editor_absoluteY="16dp"
+            tools:ignore="MissingConstraints" />
+
+        <ListView
+            android:id="@+id/lv_ListaProductos"
+            android:layout_width="379dp"
+            android:layout_height="657dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="27dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

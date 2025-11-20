@@ -22,14 +22,14 @@ public class ListaProductos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         binding = ActivityListaProductosBinding.inflate(getLayoutInflater());
-        setContentView(R.layout.activity_lista_productos);
+        setContentView(binding.getRoot());
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
         cargarProductos();
-
+        mostrarEnListView();
     }
     private void cargarProductos() {
         listaProductos = new ArrayList<>();
@@ -38,6 +38,19 @@ public class ListaProductos extends AppCompatActivity {
         listaProductos.add(new Producto("Cocina", 850.00, R.drawable.cocina));
         listaProductos.add(new Producto("Rápiducha", 250.00, R.drawable.rapiducha));
     }
+    private void mostrarEnListView() {
+        // Crear lista de nombres para mostrar en el ListView
+        ArrayList<String> nombres = new ArrayList<>();
+        for (Producto p : listaProductos) {
+            nombres.add(p.getNombre());
+        }
 
+        adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                nombres
+        );
+        binding.lvListaProductos.setAdapter(adapter);
+    }
 
 }
