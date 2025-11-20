@@ -203,6 +203,14 @@
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
 
+                <Button
+                    android:id="@+id/btnRegresar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#D11E26"
+                    android:text="REGRESAR"
+                    android:textSize="18sp" />
+
             </LinearLayout>
 
         </LinearLayout>
